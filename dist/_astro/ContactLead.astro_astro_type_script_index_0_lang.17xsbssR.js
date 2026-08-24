@@ -1,0 +1,3 @@
+import{g as u}from"./whatsapp.C2657DpE.js";const a=document.querySelector("[data-lead-form]");if(a){const e=a.querySelector("#name"),r=a.querySelector("#message"),n=a.querySelector("#name-error"),o=a.querySelector("#message-error"),s=(i,t)=>{i.addEventListener("input",()=>{t.hidden||(t.hidden=!0,i.removeAttribute("aria-invalid"))})};e&&r&&n&&o&&(s(e,n),s(r,o),a.addEventListener("submit",i=>{i.preventDefault();let t=!0;if(e.value.trim()||(n.hidden=!1,e.setAttribute("aria-invalid","true"),t=!1),r.value.trim()||(o.hidden=!1,r.setAttribute("aria-invalid","true"),t=!1),!t){e.value.trim()===""?e.focus():r.focus();return}const l=`Hola Beira, soy ${e.value.trim()}.
+
+${r.value.trim()}`;window.open(u(l),"_blank","noopener,noreferrer")}))}

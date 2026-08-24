@@ -1,0 +1,1 @@
+const o={contact:{whatsappNumber:"5491100000000"},whatsappMessage:"Hola Beira, visité el sitio y quiero conversar sobre un proyecto tecnológico."};function s(t){const e=encodeURIComponent(t);return`https://wa.me/${o.contact.whatsappNumber}?text=${e}`}export{s as g,o as s};
