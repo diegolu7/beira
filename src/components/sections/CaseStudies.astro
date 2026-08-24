@@ -1,0 +1,53 @@
+---
+import { caseStudies } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import CaseStudyCard from '../ui/CaseStudyCard.astro';
+---
+
+{
+  caseStudies.length > 0 && (
+    <section class="cases" id="casos">
+      <div class="container">
+        <SectionHeader
+          eyebrow="Casos de éxito"
+          title="Proyectos que demuestran experiencia"
+          description="Resultados concretos en desarrollo, producto y e-commerce."
+        />
+
+        <div class="cases__grid">
+          {caseStudies.map((caseStudy, index) => (
+            <CaseStudyCard caseStudy={caseStudy} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .cases {
+    background: var(--color-background);
+    padding-block: var(--section-pad);
+  }
+
+  .cases__grid {
+    margin-top: var(--space-9);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+
+  .cases__grid > :first-child {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 767px) {
+    .cases__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cases__grid > :first-child {
+      grid-column: span 1;
+    }
+  }
+</style>

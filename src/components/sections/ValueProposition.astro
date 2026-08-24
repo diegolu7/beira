@@ -1,0 +1,153 @@
+---
+import LayersIcon from '../icons/LayersIcon.astro';
+import CartIcon from '../icons/CartIcon.astro';
+import BriefcaseIcon from '../icons/BriefcaseIcon.astro';
+import { site } from '../../data/site';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+---
+
+<section class="value">
+  <div class="container">
+    <div class="value__grid">
+      <div class="value__statement" data-reveal>
+        <p class="eyebrow">Propuesta de valor</p>
+        <h2>Un socio tecnológico que entiende el negocio y ejecuta</h2>
+        <p class="value__lead">
+          Trabajamos junto a CTOs, CIOs, gerentes de IT y equipos de producto que necesitan desarrollar,
+          mejorar o escalar sus soluciones digitales con criterio técnico y visión de negocio.
+        </p>
+        <a
+          href={getWhatsAppUrl(site.whatsappMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="value__cta"
+          data-analytics="whatsapp"
+          data-location="value-proposition"
+        >
+          Conversemos <span aria-hidden="true">➔</span>
+        </a>
+      </div>
+
+      <ul class="value__list">
+        <li class="value__item" data-reveal>
+          <span class="icon-box" aria-hidden="true">
+            <LayersIcon />
+          </span>
+          <div>
+            <h3>Productos digitales</h3>
+            <p>Del MVP a la escala, con foco en el usuario y en los resultados.</p>
+          </div>
+        </li>
+        <li class="value__item" data-reveal>
+          <span class="icon-box" aria-hidden="true">
+            <CartIcon />
+          </span>
+          <div>
+            <h3>E-commerce y plataformas</h3>
+            <p>Canales de venta sólidos, optimizados para convertir y crecer.</p>
+          </div>
+        </li>
+        <li class="value__item" data-reveal>
+          <span class="icon-box" aria-hidden="true">
+            <BriefcaseIcon />
+          </span>
+          <div>
+            <h3>Gestión de proyectos y consultoría IT</h3>
+            <p>Procesos ágiles y decisiones técnicas informadas, sin improvisación.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .value {
+    background: var(--color-surface);
+    padding-block: var(--section-pad);
+  }
+
+  .value__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .value__statement {
+    max-width: 540px;
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+  }
+
+  .value__statement h2 {
+    margin-top: var(--space-4);
+  }
+
+  .value__lead {
+    margin-top: var(--space-5);
+    font-size: var(--text-md);
+  }
+
+  .value__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+
+  .value__cta span {
+    transition: transform var(--transition);
+  }
+
+  .value__cta:hover {
+    opacity: 0.7;
+  }
+
+  .value__cta:hover span {
+    transform: translateX(4px);
+  }
+
+  .value__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .value__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .value__item h3 {
+    font-size: var(--text-md);
+    font-weight: 600;
+  }
+
+  .value__item p {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 899px) {
+    .value__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .value__statement {
+      position: static;
+    }
+  }
+</style>

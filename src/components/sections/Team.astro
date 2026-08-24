@@ -1,0 +1,98 @@
+---
+import { team } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+---
+
+{
+  team.length > 0 && (
+    <section class="team" id="equipo">
+      <div class="container">
+        <SectionHeader
+          eyebrow="Equipo"
+          title="Quiénes están detrás de Beira"
+          description="Profesionales senior con experiencia real en producto, ingeniería y diseño."
+          align="center"
+        />
+
+        <ul class="team__grid">
+          {team.map((member) => (
+            <li class="team__card" data-reveal>
+              {member.photo && (
+                <img
+                  class="team__photo"
+                  src={member.photo}
+                  alt={`Foto de ${member.name}`}
+                  loading="lazy"
+                />
+              )}
+              <h3>{member.name}</h3>
+              <p class="team__role">{member.role}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .team {
+    background: var(--color-background);
+    padding-block: var(--section-pad);
+  }
+
+  .team__grid {
+    margin-top: var(--space-9);
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+  }
+
+  .team__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    text-align: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--space-6);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .team__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .team__photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--color-accent-soft);
+  }
+
+  .team__card h3 {
+    font-size: var(--text-md);
+  }
+
+  .team__role {
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 1023px) {
+    .team__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .team__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

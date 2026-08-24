@@ -1,0 +1,17 @@
+---
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { site } from '../../data/site';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+---
+
+<a
+  href={getWhatsAppUrl(site.whatsappMessage)}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="wa-float"
+  aria-label="Conversar por WhatsApp"
+  data-analytics="whatsapp"
+  data-location="floating-button"
+>
+  <WhatsAppIcon />
+</a>

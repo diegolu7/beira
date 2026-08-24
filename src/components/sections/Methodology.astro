@@ -1,0 +1,98 @@
+---
+import { processSteps } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import ProcessStep from '../ui/ProcessStep.astro';
+---
+
+<section class="method" id="metodologia">
+  <div class="container">
+    <SectionHeader
+      eyebrow="Metodología"
+      title="Un proceso claro, de la idea al deploy"
+      description="Cada proyecto avanza por etapas definidas, con entregas incrementales y comunicación constante."
+    />
+
+    <ol class="method__steps">
+      <span class="method__line" aria-hidden="true"></span>
+      {processSteps.map((step, index) => (
+        <ProcessStep step={step} index={index} />
+      ))}
+    </ol>
+
+    <p class="method__cta">
+      <a href="#contacto" class="method__link">¿Tenés un proyecto en mente? Conversemos</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .method {
+    background: var(--color-surface);
+    padding-block: var(--section-pad);
+  }
+
+  .method__steps {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-9) 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    position: relative;
+  }
+
+  .method__line {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    border-top: 2px dashed var(--color-border-strong);
+    z-index: 0;
+  }
+
+  .method__cta {
+    margin-top: var(--space-8);
+  }
+
+  .method__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+
+  .method__link::after {
+    content: '➔';
+    transition: transform var(--transition);
+  }
+
+  .method__link:hover {
+    opacity: 0.7;
+  }
+
+  .method__link:hover::after {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 899px) {
+    .method__steps {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .method__line {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .method__steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

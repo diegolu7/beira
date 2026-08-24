@@ -1,0 +1,204 @@
+---
+import CheckIcon from '../icons/CheckIcon.astro';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+---
+
+<section class="lead" id="contacto">
+  <div class="container">
+    <div class="lead__panel">
+      <div class="lead__info" data-reveal>
+        <p class="eyebrow">Contacto</p>
+        <h2>Conversemos sobre tu proyecto</h2>
+        <p class="lead__desc">
+          Contanos qué necesitás resolver y te respondemos por WhatsApp para coordinar una primera
+          conversación, sin compromiso.
+        </p>
+        <ul class="lead__points">
+          <li>
+            <span class="icon-box icon-box--soft" aria-hidden="true">
+              <CheckIcon />
+            </span>
+            Respuesta directa del equipo
+          </li>
+          <li>
+            <span class="icon-box icon-box--soft" aria-hidden="true">
+              <CheckIcon />
+            </span>
+            Primera conversación y presupuesto sin costo
+          </li>
+          <li>
+            <span class="icon-box icon-box--soft" aria-hidden="true">
+              <CheckIcon />
+            </span>
+            Te asesoramos sobre el mejor camino
+          </li>
+        </ul>
+      </div>
+
+      <div class="lead__form-wrap" data-reveal>
+        <form class="lead-form" data-lead-form novalidate>
+          <div class="lead-form__field">
+            <label for="name">Nombre completo</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Tu nombre"
+            />
+            <p class="lead-form__error" id="name-error" hidden>
+              Ingresá tu nombre.
+            </p>
+          </div>
+
+          <div class="lead-form__field">
+            <label for="message">¿Qué necesitás resolver?</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Contanos brevemente el desafío: producto, sistema, e-commerce u otro."
+            ></textarea>
+            <p class="lead-form__error" id="message-error" hidden>
+              Contanos brevemente qué necesitás resolver.
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn--primary btn--lg"
+            data-analytics="whatsapp"
+            data-location="lead-form"
+          >
+            <WhatsAppIcon class="btn__icon" />
+            <span>Enviar por WhatsApp</span>
+          </button>
+        </form>
+        <p class="lead__note">
+          Tu mensaje se abre en WhatsApp y podés revisarlo antes de enviarlo.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { getWhatsAppUrl } from '../../utils/whatsapp';
+
+  const form = document.querySelector<HTMLFormElement>('[data-lead-form]');
+
+  if (form) {
+    const nameInput = form.querySelector<HTMLInputElement>('#name');
+    const messageInput = form.querySelector<HTMLTextAreaElement>('#message');
+    const nameError = form.querySelector<HTMLElement>('#name-error');
+    const messageError = form.querySelector<HTMLElement>('#message-error');
+
+    const clearError = (input: HTMLInputElement | HTMLTextAreaElement, error: HTMLElement): void => {
+      input.addEventListener('input', () => {
+        if (!error.hidden) {
+          error.hidden = true;
+          input.removeAttribute('aria-invalid');
+        }
+      });
+    };
+
+    if (nameInput && messageInput && nameError && messageError) {
+      clearError(nameInput, nameError);
+      clearError(messageInput, messageError);
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let valid = true;
+
+        if (!nameInput.value.trim()) {
+          nameError.hidden = false;
+          nameInput.setAttribute('aria-invalid', 'true');
+          valid = false;
+        }
+
+        if (!messageInput.value.trim()) {
+          messageError.hidden = false;
+          messageInput.setAttribute('aria-invalid', 'true');
+          valid = false;
+        }
+
+        if (!valid) {
+          if (nameInput.value.trim() === '') {
+            nameInput.focus();
+          } else {
+            messageInput.focus();
+          }
+          return;
+        }
+
+        const text = `Hola Beira, soy ${nameInput.value.trim()}.\n\n${messageInput.value.trim()}`;
+        window.open(getWhatsAppUrl(text), '_blank', 'noopener,noreferrer');
+      });
+    }
+  }
+</script>
+
+<style>
+  .lead {
+    background: var(--color-surface);
+    padding-block: var(--section-pad);
+  }
+
+  .lead__panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .lead__desc {
+    margin-top: var(--space-5);
+    font-size: var(--text-md);
+    max-width: 460px;
+  }
+
+  .lead__points {
+    margin-top: var(--space-6);
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .lead__points li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .lead__form-wrap {
+    background: var(--color-surface-tint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--space-7);
+    box-shadow: var(--shadow-card);
+  }
+
+  .lead__note {
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+    color: var(--color-muted-light);
+    text-align: center;
+  }
+
+  @media (max-width: 899px) {
+    .lead__panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lead__form-wrap {
+      padding: var(--space-5);
+    }
+  }
+</style>

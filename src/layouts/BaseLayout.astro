@@ -1,0 +1,120 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import { site, services, faq } from '../data/site';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import FloatingWhatsApp from '../components/layout/FloatingWhatsApp.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  canonical = site.url,
+} = Astro.props;
+
+const serviceItems = services.map((service) => ({
+  '@type': 'Service',
+  name: service.title,
+  description: service.description,
+  provider: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+  },
+}));
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  email: site.contact.email,
+  areaServed: 'Argentina',
+};
+
+const professionalServiceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  url: site.url,
+  email: site.contact.email,
+  description: site.description,
+  areaServed: 'Argentina',
+  makesOffer: serviceItems.map((service) => ({
+    '@type': 'Offer',
+    itemOffered: service,
+  })),
+};
+
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: serviceItems.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: service,
+  })),
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/webp" href={import.meta.env.BASE_URL + 'favicon.webp'} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={site.ogTitle} />
+    <meta property="og:description" content={site.ogDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_AR" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={site.ogTitle} />
+    <meta name="twitter:description" content={site.ogDescription} />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script>
+      import { initReveal } from '../scripts/reveal';
+      initReveal();
+    </script>
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationLd)}></script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(professionalServiceLd)}></script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceLd)}></script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqLd)}></script>
+  </head>
+  <body>
+    <Header />
+    <main id="top">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingWhatsApp />
+  </body>
+</html>

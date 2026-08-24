@@ -1,0 +1,72 @@
+---
+import type { CaseStudy } from '../../data/site';
+
+interface Props {
+  caseStudy: CaseStudy;
+  index: number;
+}
+
+const { caseStudy, index } = Astro.props;
+---
+
+<article class="case-card" data-reveal style={`--reveal-delay: ${index * 110}ms`}>
+  <div class="case-card__meta">
+    <span class="case-card__tags">
+      {caseStudy.tags.map((tag) => <span class="case-card__tag">{tag}</span>)}
+    </span>
+  </div>
+  <h3>{caseStudy.title}</h3>
+  <p>{caseStudy.summary}</p>
+  {caseStudy.result && (
+    <p class="case-card__result">
+      <strong>Resultado:</strong> {caseStudy.result}
+    </p>
+  )}
+</article>
+
+<style>
+  .case-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--space-7);
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .case-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .case-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .case-card__tag {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    background: var(--color-accent-soft);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .case-card__result strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+</style>

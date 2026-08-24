@@ -1,0 +1,38 @@
+---
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { site } from '../../data/site';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+
+interface Props {
+  message?: string;
+  variant?: 'primary' | 'secondary' | 'dark' | 'outline-light';
+  size?: 'md' | 'lg';
+  location?: string;
+  label?: string;
+  class?: string;
+}
+
+const {
+  message = site.whatsappMessage,
+  variant = 'primary',
+  size = 'lg',
+  location = 'generic',
+  label = 'Conversar por WhatsApp',
+  class: className = '',
+} = Astro.props;
+
+const href = getWhatsAppUrl(message);
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
+  data-analytics="whatsapp"
+  data-location={location}
+>
+  <WhatsAppIcon class="btn__icon" />
+  <span>{label}</span>
+  <slot />
+</a>

@@ -1,0 +1,35 @@
+---
+import { faq } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import FAQItem from '../ui/FAQItem.astro';
+---
+
+<section class="faq" id="faq">
+  <div class="container">
+    <SectionHeader
+      eyebrow="FAQ"
+      title="Preguntas frecuentes"
+      description="Las dudas más comunes antes de empezar a trabajar juntos."
+    />
+
+    <div class="faq__list">
+      {faq.map((item) => (
+        <FAQItem item={item} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--color-surface);
+    padding-block: var(--section-pad);
+  }
+
+  .faq__list {
+    margin-top: var(--space-8);
+    display: grid;
+    gap: var(--space-4);
+    max-width: 800px;
+  }
+</style>

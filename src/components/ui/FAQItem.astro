@@ -1,0 +1,101 @@
+---
+import type { FaqItem } from '../../data/site';
+
+interface Props {
+  item: FaqItem;
+}
+
+const { item } = Astro.props;
+---
+
+<details class="faq-item" name="faq" data-reveal>
+  <summary class="faq-item__summary">
+    <span>{item.question}</span>
+    <span class="faq-item__icon" aria-hidden="true"></span>
+  </summary>
+  <div class="faq-item__answer">
+    <p>{item.answer}</p>
+  </div>
+</details>
+
+<style>
+  .faq-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
+  }
+
+  .faq-item__summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    min-height: 56px;
+    transition: color var(--transition);
+  }
+
+  .faq-item__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__summary:hover {
+    color: var(--color-accent-deep);
+  }
+
+  .faq-item__icon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    position: relative;
+    transition: background-color var(--transition);
+  }
+
+  .faq-item__icon::before,
+  .faq-item__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background: var(--color-ink);
+    transition: transform var(--transition);
+  }
+
+  .faq-item__icon::before {
+    width: 12px;
+    height: 2px;
+  }
+
+  .faq-item__icon::after {
+    width: 2px;
+    height: 12px;
+  }
+
+  .faq-item[open] .faq-item__icon::after {
+    transform: scaleY(0);
+  }
+
+  .faq-item__answer {
+    padding: 0 var(--space-6) var(--space-5);
+    max-width: 680px;
+  }
+
+  .faq-item__answer p {
+    margin: 0;
+  }
+</style>

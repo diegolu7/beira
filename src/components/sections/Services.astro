@@ -1,0 +1,72 @@
+---
+import '../../styles/services.css';
+import { services } from '../../data/site';
+import LayersIcon from '../icons/LayersIcon.astro';
+import CartIcon from '../icons/CartIcon.astro';
+import BriefcaseIcon from '../icons/BriefcaseIcon.astro';
+import ChartIcon from '../icons/ChartIcon.astro';
+
+const iconMap = {
+  layers: LayersIcon,
+  cart: CartIcon,
+  briefcase: BriefcaseIcon,
+  chart: ChartIcon,
+};
+---
+
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="section-header section-header--center" data-reveal>
+      <p class="eyebrow">Servicios</p>
+      <h2>Qué podemos construir para tu empresa</h2>
+      <p class="section-header__desc">
+        Soluciones integrales de desarrollo y consultoría, pensadas para resolver problemas reales de
+        negocio.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      {
+        services.map((service, index) => {
+          const Icon = iconMap[service.icon];
+          return (
+            <article
+              class="service-card"
+              data-reveal
+              data-spotlight
+              style={`--reveal-delay: ${index * 80}ms`}
+            >
+              <div class="service-card__spotlight" aria-hidden="true"></div>
+              <div class="service-card__content">
+                <div class="service-card__head">
+                  <span class="service-card__icon" aria-hidden="true">
+                    <Icon />
+                  </span>
+                  <h3 class="service-card__title">{service.title}</h3>
+                </div>
+                <p class="service-card__desc">{service.description}</p>
+                <ul class="service-card__points">
+                  {service.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('[data-spotlight]');
+
+  cards.forEach((card) => {
+    card.addEventListener('mousemove', (event: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--spot-x', `${((event.clientX - rect.left) / rect.width) * 100}%`);
+      card.style.setProperty('--spot-y', `${((event.clientY - rect.top) / rect.height) * 100}%`);
+    });
+  });
+</script>

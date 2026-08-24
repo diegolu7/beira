@@ -1,0 +1,47 @@
+---
+import type { ProcessStep } from '../../data/site';
+
+interface Props {
+  step: ProcessStep;
+  index: number;
+}
+
+const { step, index } = Astro.props;
+const number = String(index + 1);
+---
+
+<li class="process-step" data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+  <span class="process-step__num" aria-hidden="true">{number}</span>
+  <h3>{step.title}</h3>
+  <p>{step.description}</p>
+</li>
+
+<style>
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .process-step__num {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-step h3 {
+    font-weight: 600;
+  }
+
+  .process-step p {
+    font-size: var(--text-sm);
+  }
+</style>

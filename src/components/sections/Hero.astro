@@ -1,0 +1,20 @@
+---
+import { getImage } from 'astro:assets';
+import heroImg from '../../assets/hero_img.png';
+import HeroSection from '../react/HeroSection';
+
+const heroImage = await getImage({
+  src: heroImg,
+  widths: [360, 560, 760],
+  sizes: '(max-width: 1023px) 100vw, 45vw',
+  format: 'webp',
+});
+---
+
+<HeroSection
+  imageSrc={heroImage.src}
+  imageSrcSet={heroImage.srcSet.attribute}
+  imageWidth={heroImage.attributes.width}
+  imageHeight={heroImage.attributes.height}
+  client:load
+/>

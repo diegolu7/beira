@@ -1,0 +1,78 @@
+---
+import { clients } from '../../data/site';
+---
+
+<section class="trust" aria-label="Empresas que confían en Beira">
+  <div class="container trust__inner">
+    <p class="trust__label">Empresas que confían en Beira</p>
+    <ul class="trust__logos">
+      {clients.map((client) => (
+        <li class="trust__item">
+          <img
+            src={client.logo}
+            alt={client.name}
+            height="40"
+            loading="lazy"
+            decoding="async"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-8);
+  }
+
+  .trust__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .trust__label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .trust__logos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-6) var(--space-9);
+  }
+
+  .trust__item img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.55;
+    filter: grayscale(1);
+    transition:
+      opacity var(--transition),
+      filter var(--transition);
+  }
+
+  .trust__item:hover img {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  @media (max-width: 480px) {
+    .trust__logos {
+      gap: var(--space-5) var(--space-7);
+    }
+  }
+</style>
