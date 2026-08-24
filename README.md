@@ -42,8 +42,6 @@ Abre http://localhost:4321
 ## Estructura
 
 ```
-├── .github/workflows/
-│   └── deploy.yml              # Deploy a GitHub Pages (solo main)
 ├── public/
 │   ├── favicon.webp
 │   ├── icon-beira-white.webp   # Logo (variante blanca/lima)
@@ -105,12 +103,29 @@ Los assets (`public/`), `site.url`, canonical, JSON-LD y `robots.txt` se generan
 
 ### GitHub Pages (demo)
 
-1. Push a la rama `main`.
-2. El workflow `.github/workflows/deploy.yml` corre `npm run build:gh`, sube el artifact y despliega con `actions/deploy-pages`.
-3. **Configurar una sola vez** en el repo: **Settings → Pages → Source: "GitHub Actions"**.
+1. Build localmente para el entorno de GitHub Pages:
+
+   ```bash
+   npm run build:gh
+   ```
+
+2. Publicar el contenido de `dist/` en la rama `gh-pages`:
+
+   ```bash
+   git checkout --orphan gh-pages
+   git rm -rf .
+   cp -r dist/. .
+   git add -A
+   git commit -m "deploy"
+   git push -u origin gh-pages
+   git checkout -f main
+   ```
+
+3. Configurar en el repo: **Settings → Pages → Source: "Deploy from a branch"** → rama **`gh-pages`** → carpeta **/ (root)**.
+
 4. Demo en: `https://diegolu7.github.io/beira/`
 
-> Nota: GitHub Pages sirve un único sitio por repo. El modo producción (`beira.ar`) está preparado en el código pero desactivado en el workflow; si se activa, requeriría dominio custom + DNS (CNAME `beira.ar → diegolu7.github.io` o registros A de GitHub Pages).
+> Nota: GitHub Pages sirve un único sitio por repo. El modo producción (`beira.ar`) está preparado en el código (`DEPLOY_TARGET=production`) pero desactivado; si se activa, requiere dominio custom + DNS.
 
 ## QA
 
