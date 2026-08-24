@@ -5,7 +5,7 @@ dist/
 .env.*
 *.local
 # unused source/reference images at repo root
-hero_img.png
-hero_new.png
-hero_example.png
-ejemplo_imagen.png
+/hero_img.png
+/hero_new.png
+/hero_example.png
+/ejemplo_imagen.png
