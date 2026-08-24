@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:gh": "DEPLOY_TARGET=gh-pages astro build",
+    "build:prod": "DEPLOY_TARGET=production astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"

@@ -46,7 +46,7 @@ export interface FaqItem {
 export const site = {
   name: 'Beira',
   domain: 'beira.ar',
-  url: 'https://diegolu7.github.io/beira/',
+  url: import.meta.env.SITE.replace(/\/$/, '') + import.meta.env.BASE_URL,
   title: 'Consultora tecnológica B2B | Software a medida y productos digitales',
   description:
     'Beira es una consultora tecnológica B2B: desarrollamos software a medida, productos digitales, e-commerce y consultoría IT para empresas que quieren escalar. Conversá con nuestro equipo por WhatsApp.',
